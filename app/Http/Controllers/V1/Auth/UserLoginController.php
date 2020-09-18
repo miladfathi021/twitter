@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\V1\Auth;
 
+use App\Exceptions\ValidationException;
 use App\Http\Controllers\ApiController;
 use App\Http\Requests\Auth\UserLoginRequest;
 use App\Http\Resources\UserResource;
@@ -11,6 +12,11 @@ use Illuminate\Support\Facades\Auth;
 
 class UserLoginController extends ApiController
 {
+    /**
+     * @param UserLoginRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws AuthenticationException
+     */
     public function store(UserLoginRequest $request)
     {
         $fieldType = filter_var($request->get('username'), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
