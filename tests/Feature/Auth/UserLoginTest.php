@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Auth;
 
-use App\Models\User\User;
 use Database\Factories\UserFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -52,5 +51,36 @@ class UserLoginTest extends TestCase
                     'username' =>  $attributes['username']
                 ]
             ]);
+    }
+
+    /** @test **/
+    public function username_is_required()
+    {
+        UserFactory::new()->create(['email' => $this->userLoginData()['username']]);
+
+        $attributes = $this->userLoginData();
+        $attributes['username'] = null;
+
+        $this->postJson(route('user-login.store'), $attributes)
+            ->assertStatus(400);
+    }
+
+    /** @test **/
+    public function password_is_required()
+    {
+        UserFactory::new()->create(['email' => $this->userLoginData()['username']]);
+
+        $attributes = $this->userLoginData();
+        $attributes['password'] = null;
+
+        $this->postJson(route('user-login.store'), $attributes)
+            ->assertStatus(400);
+    }
+
+    /** @test **/
+    public function username_must_be_exists_in_users_table()
+    {
+        $this->postJson(route('user-login.store'), $this->userLoginData())
+            ->assertStatus(400);
     }
 }

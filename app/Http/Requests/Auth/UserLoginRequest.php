@@ -23,8 +23,10 @@ class UserLoginRequest extends FormRequest
      */
     public function rules()
     {
+        $fieldType = filter_var($this->request->get('username'), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
         return [
-            'username' => 'bail|required|string|min:3|max:255',
+            'username' => 'bail|required|string|min:3|max:255|exists:users,' . $fieldType,
             'password' => 'bail|required|string|min:3|max:255'
         ];
     }

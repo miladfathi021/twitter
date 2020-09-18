@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Auth;
 
 class UserRegisterController extends ApiController
 {
+    /**
+     * @param UserRegisterRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(UserRegisterRequest $request)
     {
         // Create Username
