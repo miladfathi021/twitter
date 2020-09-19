@@ -18,7 +18,7 @@ class CreateApiTokensTable extends Migration
             $table->foreignId('user_id')
                 ->constrained('users', 'id')
                 ->cascadeOnDelete();
-            $table->string('token');
+            $table->string('token')->unique()->index();
             $table->timestamps();
         });
     }
