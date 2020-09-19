@@ -43,8 +43,8 @@ return [
 
         'api' => [
             'driver' => 'token',
-            'provider' => 'users',
-            'hash' => false,
+            'provider' => 'tokens',
+            'hash' => true,
         ],
     ],
 
@@ -71,10 +71,16 @@ return [
             'model' => App\Models\User\User::class,
         ],
 
+
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],
+
+         'tokens' => [
+             'driver' => 'eloquent',
+             'model' => \App\Models\Auth\ApiToken::class
+         ],
     ],
 
     /*
