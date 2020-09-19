@@ -20,8 +20,8 @@ class Username
 
     public function generate()
     {
-        $this->attributes['username'] = explode('@', $this->attributes['email'])[0];
+        $username = explode('@', $this->attributes['email']);
 
-        return $this->attributes;
+        return $username[0] . rand(10000, 99999);
     }
 }

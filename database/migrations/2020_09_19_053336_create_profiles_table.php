@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateApiTokensTable extends Migration
+class CreateProfilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,14 @@ class CreateApiTokensTable extends Migration
      */
     public function up()
     {
-        Schema::create('api_tokens', function (Blueprint $table) {
+        Schema::create('profiles', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')
                 ->constrained('users', 'id')
                 ->cascadeOnDelete();
-            $table->string('token')->unique()->index();
+
+            $table->string('username')->unique()->index();
+
             $table->timestamps();
         });
     }
@@ -30,6 +32,6 @@ class CreateApiTokensTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('api_tokens');
+        Schema::dropIfExists('profiles');
     }
 }
