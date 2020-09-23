@@ -26,7 +26,7 @@ class TokenManager
         $token = Str::uuid();
 
         return $this->user->apiTokens()->create([
-            'token' => $token
+            'api_token' => $token
         ]);
     }
 }
