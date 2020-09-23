@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'username'
+        'name', 'email', 'password',
     ];
 
     /**
@@ -45,5 +45,10 @@ class User extends Authenticatable
     public function apiTokens()
     {
         return $this->hasMany(ApiToken::class, 'user_id');
+    }
+
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
     }
 }
