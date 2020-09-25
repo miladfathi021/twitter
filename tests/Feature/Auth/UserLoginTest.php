@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Auth;
 
+use Database\Factories\ProfileFactory;
 use Database\Factories\UserFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -39,16 +40,19 @@ class UserLoginTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $attributes = $this->userLoginData();
-        $attributes['username'] = 'miladfathi021';
+        $user = UserFactory::new()->create();
+        $profile = ProfileFactory::new()->create(['username' => 'miladfathi021', 'user_id' => $user->id]);
 
-        UserFactory::new()->create(['username' => $attributes['username']]);
+        $data = [
+            'username' => $profile->username,
+            'password' => 'password'
+        ];
 
-        $this->postJson(route('user-login.store'), $attributes)
+        $this->postJson(route('user-login.store'), $data)
             ->assertStatus(200)
             ->assertJson([
                 'data' => [
-                    'username' =>  $attributes['username']
+                    'email' =>  $user->email,
                 ]
             ]);
     }
