@@ -25,8 +25,15 @@ class UserLoginRequest extends FormRequest
     {
         $fieldType = filter_var($this->request->get('username'), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
+        if ($fieldType === 'username') {
+            return [
+                'username' => 'bail|required|string|min:3|max:255|exists:profiles,username',
+                'password' => 'bail|required|string|min:3|max:255'
+            ];
+        }
+
         return [
-            'username' => 'bail|required|string|min:3|max:255|exists:users,' . $fieldType,
+            'username' => 'bail|required|string|min:3|max:255|exists:users,email',
             'password' => 'bail|required|string|min:3|max:255'
         ];
     }
