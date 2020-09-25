@@ -1,7 +1,8 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Auth;
 
+use App\Models\User\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Str;
@@ -34,6 +35,11 @@ class UserRegisterTest extends TestCase
                   'email' => $this->userRegisterData()['email'],
               ]
            ]);
+
+       $this->assertDatabaseHas('users', [
+           'name' => $this->userRegisterData()['name'],
+           'email' => $this->userRegisterData()['email'],
+       ]);
     }
 
     /** @test **/
@@ -159,5 +165,29 @@ class UserRegisterTest extends TestCase
 
         $this->postJson(route('user-register.store'), $attributes)
             ->assertStatus(400);
+    }
+
+    /** @test **/
+    public function After_the_user_registers_a_profile_must_be_created()
+    {
+        $this->withoutExceptionHandling();
+
+        $this->postJson(route('user-register.store'), $this->userRegisterData())
+            ->assertStatus(200)
+            ->assertJson([
+                'data' => [
+                    'name' => $this->userRegisterData()['name'],
+                    'email' => $this->userRegisterData()['email'],
+                ]
+            ]);
+
+        $this->assertDatabaseHas('users', [
+            'name' => $this->userRegisterData()['name'],
+            'email' => $this->userRegisterData()['email'],
+        ]);
+
+        $this->assertDatabaseHas('profiles', [
+            'user_id' => User::first()->id
+        ]);
     }
 }
