@@ -21,13 +21,13 @@ class UserRegisterController extends ApiController
     {
         $user = User::create($request->all());
 
-        // Create Api Token
-        $user['api_token'] = TokenManager::new($user)->generate();
-
         Auth::login($user);
 
         // Add Username and Create Profile
         ProfileManager::new($request)->addUsername()->create();
+
+        // Create Api Token
+        $user['api_token'] = TokenManager::new($user)->generate();
 
         return $this->responseOk(
             new UserResource($user)
