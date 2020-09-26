@@ -19,6 +19,13 @@ class TweetTest extends TestCase
     }
 
     /** @test **/
+    public function The_guest_can_not_create_new_tweet()
+    {
+        $this->postJson(route('tweets.store'), $this->tweetData())
+            ->assertStatus(401);
+    }
+
+    /** @test **/
     public function The_authorized_user_can_create_a_new_tweet()
     {
         $this->withoutExceptionHandling();
