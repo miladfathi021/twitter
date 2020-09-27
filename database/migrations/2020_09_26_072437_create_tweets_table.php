@@ -20,6 +20,7 @@ class CreateTweetsTable extends Migration
                 ->cascadeOnDelete();
 
             $table->string('body');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
