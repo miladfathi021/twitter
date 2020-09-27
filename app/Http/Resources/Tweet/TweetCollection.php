@@ -2,9 +2,9 @@
 
 namespace App\Http\Resources\Tweet;
 
-use Illuminate\Http\Resources\Json\ResourceCollection;
+use App\Http\Resources\ApiResourceCollection;
 
-class TweetCollection extends ResourceCollection
+class TweetCollection extends ApiResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -14,6 +14,9 @@ class TweetCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'list' => TweetResource::collection($this->collection),
+            'pagination' => $this->pagination()
+        ];
     }
 }
