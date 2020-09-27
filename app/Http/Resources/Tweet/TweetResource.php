@@ -16,8 +16,9 @@ class TweetResource extends JsonResource
     public function toArray($request)
     {
         return [
-          'body' => $this->body,
-          'profile' => new ProfileResource($this->profile)
+            'id' => $this->id,
+            'body' => $this->body,
+            'profile' => new ProfileResource($this->profile)
         ];
     }
 }
