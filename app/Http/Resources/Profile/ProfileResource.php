@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Profile;
 
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProfileResource extends JsonResource
@@ -14,6 +15,10 @@ class ProfileResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'user' => new UserResource($this->owner),
+            'username' => $this->username,
+        ];
     }
 }
