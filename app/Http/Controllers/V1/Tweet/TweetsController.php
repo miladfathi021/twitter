@@ -16,7 +16,7 @@ class TweetsController extends ApiController
      */
     public function index()
     {
-        $tweet = auth()->user()->profile->tweets()->paginate(25);
+        $tweet = auth()->user()->profile->tweets()->orderby('created_at', 'desc')->paginate(25);
 
         return $this->responseOk(
             new TweetCollection($tweet)
