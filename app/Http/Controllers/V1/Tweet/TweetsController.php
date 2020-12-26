@@ -16,10 +16,15 @@ class TweetsController extends ApiController
      */
     public function index()
     {
-        $tweet = auth()->user()->profile->tweets()->orderby('created_at', 'desc')->paginate(25);
+        $tweets = auth()->user()
+            ->profile
+            ->tweets()
+            ->with('profile')
+            ->orderby('created_at', 'desc')
+            ->paginate(25);
 
         return $this->responseOk(
-            new TweetCollection($tweet)
+            new TweetCollection($tweets)
         );
     }
 

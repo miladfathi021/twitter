@@ -23,7 +23,7 @@ class UserRegisterController extends ApiController
 
         Auth::login($user);
 
-        // Add Username and Create Profile
+        // Add Username and Create Person
         ProfileManager::new($request)->addUsername()->create();
 
         // Create Api Token

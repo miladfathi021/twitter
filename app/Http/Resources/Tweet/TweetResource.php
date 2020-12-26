@@ -18,7 +18,7 @@ class TweetResource extends JsonResource
         return [
             'id' => $this->id,
             'body' => $this->body,
-            'profile' => new ProfileResource($this->profile)
+            'profile' => new ProfileResource($this->whenLoaded('profile'))
         ];
     }
 }
