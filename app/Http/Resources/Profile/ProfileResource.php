@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Profile;
 
+use App\Http\Resources\Tweet\TweetCollection;
 use App\Http\Resources\UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -19,6 +20,7 @@ class ProfileResource extends JsonResource
             'id' => $this->id,
             'user' => new UserResource($this->owner),
             'username' => $this->username,
+            'tweets' => new TweetCollection($this->tweets()->paginate(25))
         ];
     }
 }
